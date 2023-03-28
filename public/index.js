@@ -1,3 +1,4 @@
+// This function takes a stock symbol and returns a corresponding color in RGBA format (was included in the directions).//
 function getColor(stock){
     if(stock === "GME"){
         return 'rgba(61, 161, 61, 0.7)'
@@ -12,8 +13,9 @@ function getColor(stock){
         return 'rgba(166, 43, 158, 0.7)'
     }
 }
-
+//This function retrieves stock data from the 'twelevedata API' and creates three charts using the data.//
 async function main() {
+    // Gets the canvas elements for the charts//
 const timeChartCanvas = document.querySelector('#time-chart');
 const highestPriceChartCanvas = document.querySelector('#highest-price-chart');
 const averagePriceChartCanvas = document.querySelector('#average-price-chart');
@@ -25,10 +27,10 @@ const result = await response.json()
 const { GME, MSFT, DIS, BNTX } = result;
 
 const stocks = [GME, MSFT, DIS, BNTX];
-
+// Reverses the order of values in each stock so they are in chronological order//
 stocks.forEach( stock => stock.values.reverse())
 
-
+// Creates a line chart showing the daily high prices of each stock over time//
 new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
@@ -42,6 +44,7 @@ new Chart(timeChartCanvas.getContext('2d'), {
         }
     })    
     ;
+    // Creates a bar chart showing the highest daily price of each stock over time
     new Chart(highestPriceChartCanvas.getContext('2d'), {
         type: 'bar',
         data: {
@@ -55,6 +58,7 @@ new Chart(timeChartCanvas.getContext('2d'), {
         }
     })
 };
+//This function takes an array of stock values and returns the highest price.//
 function findHighest(values) {
     let highest = 0;
     values.forEach(value => {
@@ -64,4 +68,6 @@ function findHighest(values) {
     })
     return highest
 }
+
+// Calls the main function to create the charts//
 main();
